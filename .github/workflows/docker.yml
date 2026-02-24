@@ -36,10 +36,15 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Compute image tag
+        id: image
+        run: |
+          repo="${GITHUB_REPOSITORY,,}"
+          echo "full=ghcr.io/${repo}:${{ inputs.image_tag }}" >> "$GITHUB_OUTPUT"
       - uses: docker/build-push-action@v6
         with:
           context: .
           file: Dockerfile.64
           platforms: linux/arm64
           push: true
-          tags: ghcr.io/${{ github.repository }}:${{ inputs.image_tag }}
+          tags: ${{ steps.image.outputs.full }}

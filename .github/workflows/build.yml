@@ -14,6 +14,7 @@ jobs:
   build:
     runs-on:
       - self-hosted
+      - Linux
       - X64
     outputs:
       artifact_name: ${{ steps.artifact_meta.outputs.name }}

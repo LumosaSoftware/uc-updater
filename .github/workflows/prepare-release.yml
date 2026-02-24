@@ -1,0 +1,44 @@
+name: prepare-release
+
+on:
+  workflow_call:
+    outputs:
+      release_tag:
+        description: Release tag to use for publishing and images
+        value: ${{ jobs.prepare.outputs.release_tag }}
+
+permissions:
+  contents: read
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      release_tag: ${{ steps.set_tag.outputs.release_tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install git-cliff
+        run: |
+          set -e
+          CLIFF_VERSION=2.4.0
+          curl -sL "https://github.com/orhun/git-cliff/releases/download/v${CLIFF_VERSION}/git-cliff-${CLIFF_VERSION}-x86_64-unknown-linux-gnu.tar.gz" | tar -xz
+          sudo mv git-cliff /usr/local/bin/git-cliff
+      - name: Compute version bump
+        id: set_tag
+        run: |
+          VERSION=$(git cliff --config cliff.toml --unreleased --bumped-version)
+          CLEAN_TAG=$(echo "$VERSION" | sed 's/[a-zA-Z]//g')
+          echo "release_tag=$CLEAN_TAG" >> "$GITHUB_OUTPUT"
+      - name: Build changelog
+        run: git cliff --config cliff.toml --unreleased --bump > CHANGELOG.md
+      - name: Persist metadata
+        run: echo "RELEASE_TAG=${{ steps.set_tag.outputs.release_tag }}" > variables.env
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-metadata
+          path: |
+            variables.env
+            CHANGELOG.md
+          if-no-files-found: error

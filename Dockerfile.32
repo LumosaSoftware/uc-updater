@@ -1,0 +1,37 @@
+# This 32-bit dockerfile should only be used for CV 6.x.x
+# Due to a older version of Raspbian OS that is used.
+
+# Stage 1: Build the app using Node.js
+FROM node:18 AS base
+WORKDIR /usr/src/app
+COPY ./build .
+COPY ./package.json .
+RUN npm install --force --production
+ 
+# Stage 2: Final runtime image
+# Don't use ALPINE due to the bug with openocd
+FROM node:16-slim AS final
+WORKDIR /usr/src/app
+
+# Copy built app from previous stage
+COPY --from=base /usr/src/app .
+
+ENV OPENOCD_REPO=https://github.com/xpack-dev-tools/openocd-xpack
+ENV OPENOCD_VERSION=0.12.0-6
+ENV OPENOCD_BASE=xpack-openocd-${OPENOCD_VERSION}
+ENV OPENOCD_FILE=${OPENOCD_BASE}-linux-arm.tar.gz
+ENV PATH="$PATH:/opt/openocd/openocd/scripts:/opt/openocd/bin"
+ 
+# Install OpenOCD manually
+RUN  \
+    apt-get update && \
+    apt-get install -y wget&& \
+    cd /opt && \
+    rm -rf /var/lib/apt/lists/* && \
+    wget ${OPENOCD_REPO}/releases/download/v${OPENOCD_VERSION}/${OPENOCD_FILE} && \
+    tar -xvzf ${OPENOCD_FILE} && \
+    rm ${OPENOCD_FILE} && \
+    ln -s ${OPENOCD_BASE} openocd 
+ 
+# Execute the script
+CMD ["node", "index.js"]

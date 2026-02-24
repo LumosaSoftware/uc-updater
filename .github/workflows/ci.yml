@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - "**"
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+
+  prepare_release:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    uses: ./.github/workflows/prepare-release.yml
+
+  make_release:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: prepare_release
+    uses: ./.github/workflows/make-release.yml
+    with:
+      release_tag: ${{ needs.prepare_release.outputs.release_tag }}
+    secrets: inherit
+
+  docker:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs:
+      - build
+      - make_release
+      - prepare_release
+    uses: ./.github/workflows/docker.yml
+    with:
+      image_tag: ${{ needs.prepare_release.outputs.release_tag }}
+      build_artifact: ${{ needs.build.outputs.artifact_name }}
+    secrets: inherit

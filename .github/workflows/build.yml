@@ -1,0 +1,32 @@
+name: build
+
+on:
+  workflow_call:
+    outputs:
+      artifact_name:
+        description: Name of the uploaded build artifact
+        value: ${{ jobs.build.outputs.artifact_name }}
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      artifact_name: ${{ steps.artifact_meta.outputs.name }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.19.3
+          cache: npm
+      - run: npm install
+      - run: npm run build
+      - id: artifact_meta
+        run: echo "name=build-output" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.artifact_meta.outputs.name }}
+          path: build
+          if-no-files-found: error

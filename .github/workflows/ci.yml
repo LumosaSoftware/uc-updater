@@ -33,6 +33,8 @@ jobs:
       - build
       - make_release
       - prepare_release
+    permissions:
+      contents: write
     uses: ./.github/workflows/docker.yml
     with:
       image_tag: ${{ needs.prepare_release.outputs.release_tag }}

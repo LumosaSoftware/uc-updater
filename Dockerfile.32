@@ -2,7 +2,7 @@
 # Due to a older version of Raspbian OS that is used.
 
 # Stage 1: Build the app using Node.js
-FROM node:18 AS base
+FROM node:25 AS base
 WORKDIR /usr/src/app
 COPY ./build .
 COPY ./package.json .
@@ -10,7 +10,7 @@ RUN npm install --force --production
  
 # Stage 2: Final runtime image
 # Don't use ALPINE due to the bug with openocd
-FROM node:16-slim AS final
+FROM node:25-slim AS final
 WORKDIR /usr/src/app
 
 # Copy built app from previous stage

@@ -40,11 +40,14 @@ jobs:
         id: image
         run: |
           repo="${GITHUB_REPOSITORY,,}"
-          echo "full=ghcr.io/${repo}:${{ inputs.image_tag }}" >> "$GITHUB_OUTPUT"
+          echo "versioned=ghcr.io/${repo}:${{ inputs.image_tag }}" >> "$GITHUB_OUTPUT"
+          echo "latest=ghcr.io/${repo}:latest" >> "$GITHUB_OUTPUT"
       - uses: docker/build-push-action@v6
         with:
           context: .
           file: Dockerfile.64
           platforms: linux/arm64
           push: true
-          tags: ${{ steps.image.outputs.full }}
+          tags: |
+            ${{ steps.image.outputs.versioned }}
+            ${{ steps.image.outputs.latest }}

@@ -58,7 +58,7 @@ docker run -it --rm
   --device /dev/ttyS1:/dev/mcu2
   --volume /home/pi/firmware.elf:/firmware-uc/firmware-uc.elf
   --name uc-updater
-  <TODO: Repo here:<tag>
+  ghcr.io/lumosasoftware/uc-updater:<tag>
 ```
 
 ## Restart only
@@ -72,7 +72,7 @@ docker run -it --rm
   --device /dev/ttyS0:/dev/mcu1
   --device /dev/ttyS1:/dev/mcu2
   --name uc-updater
-  <TODO: Repo here>:<tag>
+  ghcr.io/lumosasoftware/uc-updater:<tag>
 ```
 
 ## Info

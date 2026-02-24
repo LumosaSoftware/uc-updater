@@ -6,19 +6,15 @@ on:
       artifact_name:
         description: Name of the uploaded build artifact
         value: ${{ jobs.build.outputs.artifact_name }}
-    inputs:
-      runs_on:
-        description: Runner label(s) to target
-        required: false
-        type: string
-        default: ubuntu-latest
 
 permissions:
   contents: read
 
 jobs:
   build:
-    runs-on: ${{ inputs.runs_on }}
+    runs-on:
+      - self-hosted
+      - X64
     outputs:
       artifact_name: ${{ steps.artifact_meta.outputs.name }}
     steps:

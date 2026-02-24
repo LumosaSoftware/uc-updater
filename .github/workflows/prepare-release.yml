@@ -6,19 +6,15 @@ on:
       release_tag:
         description: Release tag to use for publishing and images
         value: ${{ jobs.prepare.outputs.release_tag }}
-    inputs:
-      runs_on:
-        description: Runner label(s) to target
-        required: false
-        type: string
-        default: ubuntu-latest
 
 permissions:
   contents: read
 
 jobs:
   prepare:
-    runs-on: ${{ inputs.runs_on }}
+    runs-on:
+      - self-hosted
+      - X64
     outputs:
       release_tag: ${{ steps.set_tag.outputs.release_tag }}
     steps:

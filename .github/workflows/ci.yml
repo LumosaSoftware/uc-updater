@@ -20,6 +20,8 @@ jobs:
   make_release:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: prepare_release
+    permissions:
+      contents: write
     uses: ./.github/workflows/make-release.yml
     with:
       release_tag: ${{ needs.prepare_release.outputs.release_tag }}

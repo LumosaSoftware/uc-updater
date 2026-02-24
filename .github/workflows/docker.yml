@@ -9,6 +9,11 @@ on:
       build_artifact:
         required: true
         type: string
+      runs_on:
+        description: Runner label(s) to target
+        required: false
+        type: string
+        default: ubuntu-latest
 
 permissions:
   contents: read
@@ -16,7 +21,7 @@ permissions:
 
 jobs:
   docker:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runs_on }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4

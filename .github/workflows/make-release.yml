@@ -6,13 +6,18 @@ on:
       release_tag:
         required: true
         type: string
+      runs_on:
+        description: Runner label(s) to target
+        required: false
+        type: string
+        default: ubuntu-latest
 
 permissions:
   contents: write
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runs_on }}
     steps:
       - uses: actions/checkout@v4
         with:

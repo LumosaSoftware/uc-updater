@@ -11,11 +11,15 @@ on:
 jobs:
   build:
     uses: ./.github/workflows/build.yml
+    with:
+      runs_on: 'self-hosted'
 
   prepare_release:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: build
     uses: ./.github/workflows/prepare-release.yml
+    with:
+      runs_on: 'self-hosted'
 
   make_release:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -24,6 +28,7 @@ jobs:
       contents: write
     uses: ./.github/workflows/make-release.yml
     with:
+      runs_on: 'self-hosted'
       release_tag: ${{ needs.prepare_release.outputs.release_tag }}
     secrets: inherit
 
@@ -38,6 +43,7 @@ jobs:
       packages: write
     uses: ./.github/workflows/docker.yml
     with:
+      runs_on: 'self-hosted'
       image_tag: ${{ needs.prepare_release.outputs.release_tag }}
       build_artifact: ${{ needs.build.outputs.artifact_name }}
     secrets: inherit

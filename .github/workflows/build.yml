@@ -28,7 +28,7 @@ jobs:
       - run: npm run build
       - id: artifact_meta
         run: echo "name=build-output" >> "$GITHUB_OUTPUT"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: ${{ steps.artifact_meta.outputs.name }}
           path: build

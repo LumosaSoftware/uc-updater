@@ -44,7 +44,7 @@ jobs:
         run: git cliff --config cliff.toml --unreleased --bump > CHANGELOG.md
       - name: Persist metadata
         run: echo "RELEASE_TAG=${{ steps.set_tag.outputs.release_tag }}" > variables.env
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: release-metadata
           path: |

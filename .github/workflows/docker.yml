@@ -40,7 +40,7 @@ jobs:
           repo="${GITHUB_REPOSITORY,,}"
           echo "versioned=ghcr.io/${repo}:${{ inputs.image_tag }}" >> "$GITHUB_OUTPUT"
           echo "latest=ghcr.io/${repo}:latest" >> "$GITHUB_OUTPUT"
-      - uses: docker/build-push-action@v6
+      - uses: docker/build-push-action@v7
         with:
           context: .
           file: Dockerfile.64

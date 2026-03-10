@@ -15,6 +15,11 @@ updates:
       - "dependencies"
       - "javascript"
 
+    auto-merge:
+      match:
+        dependency-type: "all"
+        update-type: "semver:patch"
+
   # =========================
   # Dockerfiles
   # =========================
@@ -27,6 +32,11 @@ updates:
     labels:
       - "dependencies"
       - "docker"
+
+    auto-merge:
+      match:
+        dependency-type: "all"
+        update-type: "semver:patch"
 
   # =========================
   # Docker Compose
@@ -41,6 +51,11 @@ updates:
       - "dependencies"
       - "docker-compose"
 
+    auto-merge:
+      match:
+        dependency-type: "all"
+        update-type: "semver:patch"
+
   # =========================
   # GitHub Actions
   # =========================
@@ -52,3 +67,8 @@ updates:
     labels:
       - "dependencies"
       - "github-actions"
+
+    auto-merge:
+      match:
+        dependency-type: "all"
+        update-type: "semver:patch"

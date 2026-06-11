@@ -7,7 +7,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
       time: "06:00"
     open-pull-requests-limit: 5
 
@@ -15,28 +15,18 @@ updates:
       - "dependencies"
       - "javascript"
 
-    auto-merge:
-      match:
-        dependency-type: "all"
-        update-type: "semver:patch"
-
   # =========================
   # Dockerfiles
   # =========================
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
       time: "06:00"
 
     labels:
       - "dependencies"
       - "docker"
-
-    auto-merge:
-      match:
-        dependency-type: "all"
-        update-type: "semver:patch"
 
   # =========================
   # Docker Compose
@@ -44,17 +34,12 @@ updates:
   - package-ecosystem: "docker-compose"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
       time: "06:00"
 
     labels:
       - "dependencies"
       - "docker-compose"
-
-    auto-merge:
-      match:
-        dependency-type: "all"
-        update-type: "semver:patch"
 
   # =========================
   # GitHub Actions
@@ -62,13 +47,8 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
 
     labels:
       - "dependencies"
       - "github-actions"
-
-    auto-merge:
-      match:
-        dependency-type: "all"
-        update-type: "semver:patch"

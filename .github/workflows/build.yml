@@ -20,7 +20,7 @@ jobs:
       artifact_name: ${{ steps.artifact_meta.outputs.name }}
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: 20.19.3
           cache: npm

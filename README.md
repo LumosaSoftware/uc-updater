@@ -16,10 +16,10 @@ To start flashing run the docker container with some values:
 
 ### Envs
 
-`UC_1_PATH` Enter the path to serial for UC1<br/>
-`UC_2_PATH` Enter the path to serial for UC2<br/>
-`UC_1_BAUD` Enter the baudrate of UC1 (default 115200)<br/>
-`UC_2_BAUD` Enter the baudrate of UC2 (default 115200)<br/>
+`UC1_PATH` Enter the path to serial for UC1<br/>
+`UC2_PATH` Enter the path to serial for UC2<br/>
+`UC1_BAUD` Enter the baudrate of UC1 (default 115200)<br/>
+`UC2_BAUD` Enter the baudrate of UC2 (default 115200)<br/>
 `RESET_ONLY` Ony Reset the UC, not flash htem
 
 ### Only flash one MCU

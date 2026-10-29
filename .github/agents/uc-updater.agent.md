@@ -13,12 +13,12 @@ Node/TypeScript Docker container that flashes firmware to (or only resets) up to
 - `src/flasher.ts`: serial connection plus reset and program orchestration.
 - `src/shell-service.ts`: shell command wrapper with a 5s timeout.
 - `src/openocd/*.cfg`: OpenOCD reset/program configs per UC (GPIO pins are hardcoded).
-- Env vars: `UC_1_PATH`, `UC_2_PATH`, `UC_1_BAUD`, `UC_2_BAUD`, `RESET_ONLY`.
+- Env vars: `UC1_PATH`, `UC2_PATH`, `UC1_BAUD`, `UC2_BAUD`, `RESET_ONLY`
 
 ## General rules
 
 - Make minimal, focused changes; do not refactor unrelated code.
-- Edit only `src/`. `build/` is gitignored and generated.
+- Edit application source in `src/`; `build/` is gitignored and generated. Update documentation and configuration outside `src/` when required by the task.
 - Keep the existing TypeScript style (CommonJS, ES2016 target).
 - Run `npm run format` (Prettier) before committing.
 - Do not add dependencies unless necessary; Renovate/Dependabot manage updates.
